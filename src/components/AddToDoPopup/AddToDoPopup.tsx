@@ -1,24 +1,29 @@
 import React from 'react'
-import  {Modal, Button } from 'react-bootstrap';
+import  {Modal, Button, Form } from 'react-bootstrap';
 import { AddToDoProps } from './AddToDoPopupProps';
 
 function AddToDoPopup ({show, handleClose }:AddToDoProps){
     
-    return(<>
+    return(
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Add new task</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+        <Modal.Body>
+        <Form>
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Task name</Form.Label>
+                <Form.Control type="text" placeholder="Task name" />
+                <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+                </Form.Text>
+            </Form.Group>
+            <Button variant="primary" type="submit">
+                Add task
+            </Button>
+        </Form>
+        </Modal.Body>
       </Modal>
-    </>);
+    );
 }
 export default AddToDoPopup; 
