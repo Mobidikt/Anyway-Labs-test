@@ -2,7 +2,9 @@ import './App.css';
 import ToDo from './components/ToDo/ToDo';
 
 function App() {
-  return <ToDo />;
+  return (
+   <ToDo />
+  );
 }
 
 export default App;
