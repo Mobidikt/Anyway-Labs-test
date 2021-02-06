@@ -1,17 +1,23 @@
 import React from 'react'
-import  {Button } from 'react-bootstrap';
+import  { Card } from 'react-bootstrap';
+import './Done.css'
 
 function Done (){
-    const addToDo =()=>{}
-    return(<>
+    return(<div className='done'>
     <div>
-        <h2>To Do</h2>
+        <h2>Done</h2>
     </div> 
     <div>
-    <Button variant="primary" className="mr-1" onClick={addToDo}>
-      Primary
-    </Button>
+    <Card style={{ width: '18rem' }}>
+        <Card.Body>
+            <Card.Title>Card Title</Card.Title>
+            <Card.Text>
+            Some quick example text to build on the card title and make up the bulk of
+            the card's content.
+            </Card.Text>
+        </Card.Body>
+    </Card>
     </div>
-    </>);
+    </div>);
 }
 export default Done; 

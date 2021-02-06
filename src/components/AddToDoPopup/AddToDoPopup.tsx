@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import  {Modal, Button, Form } from 'react-bootstrap';
 import { AddToDoProps } from './AddToDoPopupProps';
 
-function AddToDoPopup ({show, handleClose }:AddToDoProps){
-    
+function AddToDoPopup ({open, handleClose, addTask }:AddToDoProps){
+    const [titleTask, setTitleTask] = useState<string>('')
+    useEffect(() => {
+        setTitleTask('');
+      }, [open]);
+      const handleTaskNameChange = (e:any) => {
+        setTitleTask(e.target.value);
+      };
+      const handleSubmit =(e:any)=>{
+        e.preventDefault();
+        addTask(titleTask);
+        handleClose();
+      }
     return(
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={open} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add new task</Modal.Title>
         </Modal.Header>
@@ -13,12 +24,11 @@ function AddToDoPopup ({show, handleClose }:AddToDoProps){
         <Form>
             <Form.Group controlId="formBasicPassword">
                 <Form.Label>Task name</Form.Label>
-                <Form.Control type="text" placeholder="Task name" />
+                <Form.Control type="text" placeholder="Task name" onChange={handleTaskNameChange} value={titleTask}/>
                 <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
                 </Form.Text>
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" onClick={handleSubmit}>
                 Add task
             </Button>
         </Form>

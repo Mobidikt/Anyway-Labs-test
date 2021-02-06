@@ -1,4 +1,5 @@
 export type AddToDoProps= {
-    show:boolean , 
-    handleClose : ()=> void
+    open:boolean , 
+    handleClose : ()=> void,
+    addTask: (taskName: string)=>void
 }
