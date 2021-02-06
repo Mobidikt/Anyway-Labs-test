@@ -27,12 +27,22 @@
 
 .to-do__card{
    display: flex;
+   
    margin-bottom: 2%;
 }
 .card__body{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    min-height: 80px;
 }
 .to-do__button{
     margin: 25px auto;
+}
+.card__title{
+    margin: 0;
+}
+.card__button{
+    max-height: 36px;
 }
