@@ -1,42 +1,54 @@
 import React, { useState } from 'react'
 import  {Button, Card } from 'react-bootstrap';
-// import './InProgress.css'
+import { CardInProgressProps } from './CardInProgressProps';
+import './CardInProgress.css'
 
-function CardInProgress (){
+function CardInProgress ({task, deleteTask}:CardInProgressProps){
   const [time, setTime]=useState<string>('00:00:00')
-let timer,hour, min,sec,startTime:any;
-startTime = 1612611882710;
-function addZero(n:any) {
-  return (parseInt(n, 10) < 10 ? '0' : '') + n;
+  const startTime = task.start;
+let timer:number,hour, min,sec:any;
+
+function addZero(n:any) { 
+  return (parseInt(n, 10) < 10 ? '0' : '') + n; 
 };
-  function showTimer() {
+  function showTimer() { 
       let today = Date.now();
-    timer = today - startTime;
-    hour = addZero((Math.round(timer/360000))%60);
-    min = addZero((Math.round(timer/60000))%60);
-    sec = addZero((Math.round(timer/1000))%60);
+    timer = today - startTime; 
+    hour = addZero((Math.floor(timer/3600000))%60);
+    min = addZero((Math.floor(timer/60000))%60);
+    sec = addZero((Math.floor(timer/1000))%60); 
 return (`${hour}:${min}:${sec}`)
     
 };
 const startTimer =()=>{
     setInterval(()=>{
       let timer = showTimer();
-      setTime(timer)
+      setTime(timer) 
   },1000)
 };
 
 startTimer()
+const completedTask=()=>{
+    task.end=Date.now() - startTime
+    console.log(task)
+    deleteTask(task)
+    console.log(task.end) 
+}
 
-    return(
-    <Card style={{ width: '18rem' }}>
-        <Card.Body>
-            <Card.Title>Card Title</Card.Title>
+    return(<li>
+<Card className='in-progress__card'>
+        <Card.Body style={{padding: '0.5rem 1.25rem 0.5rem 0.5rem'}} className='card__body'>
+        <div style={{height: '100%'}}>
+            <Card.Title>{task.title}</Card.Title>
             <Card.Text>
             {time}
             </Card.Text>
-            <Button variant="success">Resolve</Button>
+            </div>
+            <Button variant="success" className='card__button' onClick={completedTask}>Resolve</Button>
         </Card.Body>
     </Card>
+    </li>
+    
 );
 }
 export default CardInProgress; 

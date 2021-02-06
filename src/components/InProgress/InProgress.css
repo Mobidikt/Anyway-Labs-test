@@ -1,3 +1,27 @@
 .in-progress {
-    max-width: 30%;
+    display: flex;
+    flex-direction: column;
+    width: 32.5%;
+    border: 1px solid grey;
+    background-color: aliceblue;
+    padding: 10px 0.8%; 
+}
+.in-progress__header{
+    display: flex;
+    max-height: 30px;
+    margin-bottom: 5px;
+}
+.in-progress__title{
+    font-size: 20px;
+}
+.in-progress__list{
+    display: flex;
+    flex-direction: column;
+        list-style: none;
+        padding: 0;
+}
+
+.in-progress__card{
+   display: flex;
+   margin-bottom: 2%;
 }
