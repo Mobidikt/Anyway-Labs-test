@@ -1,12 +1,16 @@
 import React from 'react'
-import  {Button, Card} from 'react-bootstrap';
+import  {Button, Card, Badge} from 'react-bootstrap';
 import {ToDoProps} from './ToDoProps'
+import {toDoDeeds} from'../../lists-deeds/toDoDeeds'
+
 import './ToDo.css'
 
 function ToDo ({handleShow}:ToDoProps){
+
     return(<div className='to-do'>
-    <div>
-        <h2>To do</h2>
+    <div className='to-do__header'>
+    <Badge variant="secondary" className='badger'>{toDoDeeds.length}</Badge>
+        <h2 className='to-do__title'>To do</h2>
     </div> 
     <div className='to-do__list'>
     <Card  className='to-do__card' >
@@ -26,7 +30,7 @@ function ToDo ({handleShow}:ToDoProps){
         </Card.Body> 
     </Card>
     <Button variant="outline-secondary" className="to-do__button" onClick={handleShow}>
-      New task
+    &#10010; New task
     </Button>
     </div>
 

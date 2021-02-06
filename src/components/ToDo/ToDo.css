@@ -6,6 +6,20 @@
     background-color: aliceblue;
     padding: 10px 0.8%; 
 }
+.to-do__header{
+    display: flex;
+    max-height: 30px;
+    margin-bottom: 5px;
+}
+.badger{
+    border-radius: 50%;
+    height: 25px;
+    min-width: 25px;
+    margin-right: 10px;
+}
+.to-do__title{
+    font-size: 20px;
+}
 .to-do__list{
     display: flex;
     flex-direction: column;
