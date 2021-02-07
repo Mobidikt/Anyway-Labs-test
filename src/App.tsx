@@ -12,6 +12,7 @@ function App() {
   const [openPopupNewTask, setOpenPopupNewTask] = useState(false);
   const [newTask, setNewTask] = useState(false);
   const [newTaskInProgress, setNewTaskInProgress] = useState(false);
+  const [newTaskInDone, setNewTaskInDone] = useState(false);
   const handleClose = () =>  setOpenPopupNewTask(false);
   const handleShow = () => setOpenPopupNewTask(true);
   async function addTask (taskName:string, timeTask:string){
@@ -36,16 +37,22 @@ function App() {
   const loadingNewTaskInProgressSuccess = () => {
     setNewTaskInProgress(false)
   }
+  const moveTaskInDone = () =>{
+    setNewTaskInDone(true)
+  }
+  const loadingNewTaskInDone = () => {
+    setNewTaskInDone(false)
+  }
   return (
     <>
     <Header/>
     <main className='main'>
       <ToDo handleShow={handleShow} newTask={newTask} loadingNewTaskSuccess={loadingNewTaskSuccess} moveTaskInProgress={moveTaskInProgress}/>
-      <InProgress newTaskInProgress={newTaskInProgress} loadingNewTaskInProgressSuccess={loadingNewTaskInProgressSuccess}/>
-      <Done />
+      <InProgress newTaskInProgress={newTaskInProgress} loadingNewTaskInProgressSuccess={loadingNewTaskInProgressSuccess} moveTaskInDone={moveTaskInDone}/>
+      <Done newTaskInDone={newTaskInDone} loadingNewTaskInDone={loadingNewTaskInDone}/>
     </main>
       <AddToDoPopup open={openPopupNewTask} addTask={addTask}/>
-    </>
+    </> 
   );
 }
 

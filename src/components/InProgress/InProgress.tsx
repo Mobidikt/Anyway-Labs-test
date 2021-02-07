@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import  {Badge, Spinner } from 'react-bootstrap';
 import CardInProgress from '../CardInProgress/CardInProgress';
 import './InProgress.css'
-import { loadingTaskInProgress } from '../../transport/api';
+import { loadingTaskInProgress, inDoneTask } from '../../transport/api';
 import { Task } from '../../utils/projectProps';
 import { InProgressProps } from './InProgressProps';
 
-function InProgress ({newTaskInProgress, loadingNewTaskInProgressSuccess}:InProgressProps){
-  const [inProgressTasks, setInProgressTasks] = useState<Task[]|undefined>([])
+function InProgress ({newTaskInProgress, loadingNewTaskInProgressSuccess, moveTaskInDone}:InProgressProps){
+  const [inProgressTasks, setInProgressTasks] = useState<Task[]>([])
+  const [loadInProgressTasks, setLoadInProgressTasks] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   useEffect(()=>{
     setLoading(true)
@@ -18,7 +19,7 @@ function InProgress ({newTaskInProgress, loadingNewTaskInProgressSuccess}:InProg
     .catch((err)=>{
         setLoading(false)
         console.log(err)})
-},[])
+},[loadInProgressTasks])
 useEffect(()=>{
   if(newTaskInProgress){ 
       setLoading(true)
@@ -32,10 +33,20 @@ useEffect(()=>{
           console.log(err)})
   }
 },[newTaskInProgress, loadingNewTaskInProgressSuccess])
-  const taskComleted=(task:Task)=>{
-    console.log(task)
-    // const result = inProgressDeeds.findIndex(item=>item.title === task.title)
-    // console.log(result)
+  const moveToDone=(task:Task)=>{
+    const currentTask = inProgressTasks.find(item=>item.title === task.title)
+    if(currentTask){
+        currentTask.end = Date.now();
+        inDoneTask(currentTask)
+        .then(()=>{
+          moveTaskInDone()
+          loadingTaskInProgress().then((res)=>{
+          setLoadInProgressTasks(true)
+        })
+            .catch((err)=>console.log(err))
+        })
+        .catch((err)=>console.log(err))
+    } else console.log('Error: Task not found')  
   }
 
     return(<div className='in-progress'> 
@@ -46,7 +57,7 @@ useEffect(()=>{
     <ul className='in-progress__list'>  
     { loading?<Spinner style={{margin: '10px auto'}} animation="border" />
         :
-      inProgressTasks && inProgressTasks.map((item)=>{return <CardInProgress key={item.title} task={item} taskComleted={taskComleted}/> }) 
+      inProgressTasks && inProgressTasks.map((item)=>{return <CardInProgress key={item.title} task={item} moveTaskDone={moveToDone}/> }) 
     }
     </ul></div>);
 }

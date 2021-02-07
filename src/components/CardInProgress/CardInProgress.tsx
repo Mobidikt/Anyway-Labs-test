@@ -3,7 +3,7 @@ import  {Button, Card } from 'react-bootstrap';
 import { CardInProgressProps } from './CardInProgressProps';
 import './CardInProgress.css'
 
-function CardInProgress ({task, taskComleted}:CardInProgressProps){
+function CardInProgress ({task, moveTaskDone}:CardInProgressProps){
   const [time, setTime]=useState<string>('00:00:00')
   const [timeOut, setTimeOut]=useState<boolean>(false)
   const startTime = task.start;
@@ -32,9 +32,7 @@ const startTimer =()=>{
 startTimer()
 const completedTask=()=>{
     task.end=Date.now() - startTime
-    console.log(task)
-    taskComleted(task)
-    console.log(task.end) 
+    moveTaskDone(task)
 }
     return(<li>
   <Card className='in-progress__card'>

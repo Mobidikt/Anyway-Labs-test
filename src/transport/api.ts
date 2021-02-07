@@ -33,9 +33,21 @@ export const postTask =(task:Task) =>{
 };
 export const inWorkTask = (task: Task):Promise<boolean> => new Promise((resolve, reject)=>{
     const currentTaskIndex = toDoDeeds.findIndex(item=>item.title === task.title)
+    if(currentTaskIndex >= 0){
     toDoDeeds.splice(currentTaskIndex, 1)
     inProgressDeeds.push(task)
     setTimeout(()=>{
         resolve(true)},1000);
+    }else {reject()}
     }
+);
+export const inDoneTask = (task: Task):Promise<boolean> => new Promise((resolve, reject)=>{
+    const currentTaskIndex = inProgressDeeds.findIndex(item=>item.title === task.title)
+    if(currentTaskIndex >= 0){
+        inProgressDeeds.splice(currentTaskIndex, 1)
+        doneDeeds.push(task)
+        setTimeout(()=>{
+            resolve(true)},1000);
+        } else { reject()}
+    }   
 );
