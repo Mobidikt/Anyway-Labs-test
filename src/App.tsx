@@ -6,14 +6,18 @@ import Header from './components/Header/Header';
 import InProgress from './components/InProgress/InProgress';
 import ToDo from './components/ToDo/ToDo';
 import {toDoDeeds} from'./lists-deeds/toDoDeeds'
+import {calcTimeTask} from './utils/calcTimeTask'
 
 function App() {
   const [openPopupNewTask, setOpenPopupNewTask] = useState(false);
   const handleClose = () =>  setOpenPopupNewTask(false);
   const handleShow = () => setOpenPopupNewTask(true);
-  const addTask =(taskName:string)=>{
+  const addTask =(taskName:string, timeTask:string)=>{
+    const requiredTimeTask = calcTimeTask(timeTask);
     toDoDeeds.push({
       title: taskName,
+      time: timeTask,
+      requiredTime: requiredTimeTask,
       start: 0,
       end:0
     })

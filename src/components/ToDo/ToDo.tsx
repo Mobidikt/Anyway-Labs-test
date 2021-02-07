@@ -28,7 +28,7 @@ function ToDo ({handleShow}:ToDoProps){
       }
     return(<div className='to-do'>
     <div className='to-do__header'>
-        {toDoTasks &&<Badge style={{borderRadius: '50%', display: 'flex'}} variant="secondary" className='badger'>{toDoTasks.length}</Badge>}
+        <Badge style={{borderRadius: '50%', display: 'flex'}} variant="secondary" className='badger'>{toDoTasks? toDoTasks.length: 0}</Badge>
         <h2 className='to-do__title'>To do</h2>
     </div> 
     <div className='to-do__list'>

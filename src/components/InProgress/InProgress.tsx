@@ -29,7 +29,7 @@ function InProgress (){
 
     return(<div className='in-progress'> 
       <div className='in-progress__header'> 
-      <Badge style={{borderRadius: '50%', display: 'flex'}} variant="secondary" className='badger'>{inProgressDeeds.length}</Badge>
+      <Badge style={{borderRadius: '50%', display: 'flex'}} variant="secondary" className='badger'>{inProgressDeeds?inProgressDeeds.length: 0}</Badge>
         <h2 className='in-progress__title'>In progress</h2>
         </div>
     <ul className='in-progress__list'>  
