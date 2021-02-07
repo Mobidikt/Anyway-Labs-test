@@ -42,5 +42,11 @@
   margin: 0 auto;
   max-width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+}
+@media screen and (max-width: 460px){ 
+  .main {
+    justify-content: center;
+  }
 }

@@ -1,7 +1,7 @@
 .in-progress__card{
     display: flex;
     margin-bottom: 2%;
-    height: 80px;
+    min-height: 80px;
     overflow: hidden;
  }
  .card__body{

@@ -3,7 +3,7 @@ import  {Button, Card } from 'react-bootstrap';
 import { CardInProgressProps } from './CardInProgressProps';
 import './CardInProgress.css'
 
-function CardInProgress ({task, deleteTask}:CardInProgressProps){
+function CardInProgress ({task, taskComleted}:CardInProgressProps){
   const [time, setTime]=useState<string>('00:00:00')
   const startTime = task.start;
 let timer:number,hour, min,sec:any;
@@ -31,7 +31,7 @@ startTimer()
 const completedTask=()=>{
     task.end=Date.now() - startTime
     console.log(task)
-    deleteTask(task)
+    taskComleted(task)
     console.log(task.end) 
 }
 

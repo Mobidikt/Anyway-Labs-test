@@ -4,9 +4,10 @@ import { CardToDoProps } from './CardToDoProps';
 import './CardToDo.css'
 
 
-function CardToDo ({task, deleteTask}:CardToDoProps){
+function CardToDo ({task, taskStarted}:CardToDoProps){
+
  const startTask =() =>{
-    deleteTask(task);
+    taskStarted(task);
  }
     return(<li>
             <Card  className='to-do__card' >
