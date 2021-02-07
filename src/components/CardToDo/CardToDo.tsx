@@ -4,28 +4,20 @@ import { CardToDoProps } from './CardToDoProps';
 import './CardToDo.css'
 
 
-function CardToDo ({task, taskStarted}:CardToDoProps){
-
+function CardToDo ({task, moveToInProgress}:CardToDoProps){
  const startTask =() =>{
-    taskStarted(task);
+    moveToInProgress(task);
  }
     return(<li>
-            <Card  className='to-do__card' >
+        <Card  className='to-do__card' >
             <Card.Body style={{padding: '0.5rem 1.25rem 0.5rem 0.5rem'}} className='card__body'>
                 <div style={{height: '100%'}}>
-                <Card.Title >{task.title}</Card.Title>
-                <Card.Text>
-                    
-                </Card.Text>
+                    <Card.Title >{task.title}</Card.Title>
                 </div>
                 <Button variant="primary" className='card__button' onClick={startTask}>Start</Button>
             </Card.Body> 
+            <Card.Text className='card__time'>Required time: {task.time}</Card.Text>
         </Card>
     </li>)
-       
-
-    
-    
-  
 }
 export default CardToDo; 

@@ -1,3 +1,5 @@
 export type ToDoProps = {
-    handleShow: ()=>void
+    handleShow: ()=>void,
+    loadingNewTaskSuccess: ()=>void,
+    addNewTask: boolean
 }

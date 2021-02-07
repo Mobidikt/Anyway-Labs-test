@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import  {Modal, Button, Form } from 'react-bootstrap';
 import { AddToDoProps } from './AddToDoPopupProps';
 
-function AddToDoPopup ({open, handleClose, addTask }:AddToDoProps){
+function AddToDoPopup ({open, addTask }:AddToDoProps){
     const [titleTask, setTitleTask] = useState<string>('')
     const [timeTask, setTimeTask] = useState<string>('00:00')
     useEffect(() => {
@@ -19,10 +19,9 @@ function AddToDoPopup ({open, handleClose, addTask }:AddToDoProps){
       const handleSubmit =(e:any)=>{
         e.preventDefault();
         addTask(titleTask, timeTask);
-        handleClose();
       }
     return(
-    <Modal show={open} onHide={handleClose}>
+    <Modal show={open} >
         <Modal.Header closeButton>
           <Modal.Title>Add new task</Modal.Title>
         </Modal.Header>

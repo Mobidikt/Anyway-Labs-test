@@ -17,6 +17,9 @@
  .card__title{
      margin: 0;
  }
+ .card__time{
+    padding: 0 0.5rem 2px;
+ }
  .card__button{
      max-height: 36px;
  }

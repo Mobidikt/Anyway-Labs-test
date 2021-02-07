@@ -1,4 +1,4 @@
-export type  task = {
+export type Task = {
     title: string,
     time: string,
     requiredTime: number,

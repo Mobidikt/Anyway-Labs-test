@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import  { Badge, Spinner } from 'react-bootstrap';
-import {doneDeeds} from'../../lists-deeds/doneDeeds'
 import { loadingTaskDone } from '../../transport/api';
-import { task } from '../../utils/projectProps';
+import { Task } from '../../utils/projectProps';
 import CardDone from '../CardDone/CardDone';
 import './Done.css'
 
 function Done (){
-    const [doneTasks, setdoneTasks] = useState<task[]|undefined>([])
+    const [doneTasks, setdoneTasks] = useState<Task[]|undefined>([])
     const [loading, setLoading] = useState<boolean>(false)
   useEffect(()=>{
     setLoading(true)
-    loadingTaskDone.then((res)=>{
+    loadingTaskDone().then((res)=>{
         console.log(res)
         setLoading(false)
-        // setInProgressTasks(res)
+        setdoneTasks(res)
     })
     .catch((err)=>{
         setLoading(false)

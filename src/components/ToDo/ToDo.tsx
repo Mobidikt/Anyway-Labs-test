@@ -3,28 +3,37 @@ import  {Button, Badge, Spinner} from 'react-bootstrap';
 import {ToDoProps} from './ToDoProps'
 import CardToDo from '../CardToDo/CardToDo';
 import { loadingTaskToDo } from '../../transport/api';
-import { task } from '../../utils/projectProps';
+import { Task } from '../../utils/projectProps';
 import './ToDo.css'
 
-function ToDo ({handleShow}:ToDoProps){
-    const [toDoTasks, setToDoTasks] = useState<task[]|undefined>([])
+function ToDo ({handleShow, addNewTask, loadingNewTaskSuccess}:ToDoProps){
+    const [toDoTasks, setToDoTasks] = useState<Task[]>([])
     const [loading, setLoading] = useState<boolean>(false)
     useEffect(()=>{
         setLoading(true)
-        loadingTaskToDo.then((res)=>{
-            console.log(res)
+        loadingTaskToDo().then((res)=>{
             setLoading(false)
-            // setToDoTasks(res)
-        })
+            setToDoTasks(res)
+        })  
         .catch((err)=>{
             setLoading(false)
             console.log(err)})
-    },[])
-
-    const taskStarted=({task}:any)=>{
-        console.log(task)
-        // const result = inProgressDeeds.findIndex(item=>item.title === task.title)
-        // console.log(result)
+    },[]) 
+    useEffect(()=>{
+        if(addNewTask){ 
+            setLoading(true)
+            loadingTaskToDo().then((res)=>{
+                setLoading(false)
+                loadingNewTaskSuccess()
+            })
+            .catch((err)=>{
+                setLoading(false)
+                console.log(err)})
+        }
+    },[addNewTask, loadingNewTaskSuccess])
+    const moveToInProgress=(task:Task)=>{
+        const result = toDoTasks.find(item=>item.title === task.title)
+        console.log(result)
       }
     return(<div className='to-do'>
     <div className='to-do__header'>
@@ -34,7 +43,7 @@ function ToDo ({handleShow}:ToDoProps){
     <div className='to-do__list'>
         { loading?<Spinner style={{margin: '10px auto'}} animation="border" />
         :
-        toDoTasks && toDoTasks.map((item)=>{ return <CardToDo key={item.title} task={item} taskStarted={taskStarted}/>})}
+        toDoTasks && toDoTasks.map((item)=>{ return <CardToDo key={item.title} task={item} moveToInProgress={moveToInProgress}/>})}
         <Button variant="outline-secondary" className="to-do__button" onClick={handleShow}>
             &#10010; New task
         </Button>
