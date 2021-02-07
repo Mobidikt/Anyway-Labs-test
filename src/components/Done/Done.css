@@ -20,9 +20,3 @@
         list-style: none;
         padding: 0;   
 }
-.done__card{
-   display: flex;
-   margin-bottom: 2%;
-   height: 80px;
-   overflow: hidden;
-}

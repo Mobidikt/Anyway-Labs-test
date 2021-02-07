@@ -1,7 +1,7 @@
 import React from 'react'
-import  { Badge, Card } from 'react-bootstrap';
-import { costCalculation } from '../../utils/costCalculation';
+import  { Badge } from 'react-bootstrap';
 import {doneDeeds} from'../../lists-deeds/doneDeeds'
+import CardDone from '../CardDone/CardDone';
 import './Done.css'
 
 function Done (){
@@ -10,22 +10,10 @@ function Done (){
     <Badge style={{borderRadius: '50%', display: 'flex'}} variant="secondary" className='badger'>{doneDeeds.length}</Badge>
         <h2 className='done__title'>Done</h2>
     </div> 
-    <div>
-        {doneDeeds.map((item)=>{ return(
-            <Card className='done__card'>
-            <Card.Body style={{padding: '0.5rem 1.25rem 0.5rem 0.5rem'}} className='card__body'>
-            <div style={{height: '100%'}}>
-               <Card.Title>{item.title}</Card.Title>
-                <Card.Text>{
-                costCalculation(item.end-item.start)
-                    }
-                </Card.Text>
-                </div>
-            </Card.Body>
-        </Card>)
-        })}
+    <ul className='done__list'>
+        {doneDeeds.map((item)=>{ return <CardDone key={item.title} task={item} />})}
     
-    </div>
+    </ul>
     </div>);
 }
 export default Done; 
