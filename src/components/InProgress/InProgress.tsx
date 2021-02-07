@@ -4,14 +4,14 @@ import CardInProgress from '../CardInProgress/CardInProgress';
 import './InProgress.css'
 import { loadingTaskInProgress } from '../../transport/api';
 import { Task } from '../../utils/projectProps';
+import { InProgressProps } from './InProgressProps';
 
-function InProgress (){
+function InProgress ({newTaskInProgress, loadingNewTaskInProgressSuccess}:InProgressProps){
   const [inProgressTasks, setInProgressTasks] = useState<Task[]|undefined>([])
   const [loading, setLoading] = useState<boolean>(false)
   useEffect(()=>{
     setLoading(true)
     loadingTaskInProgress().then((res)=>{
-        console.log(res)
         setLoading(false)
         setInProgressTasks(res)
     })
@@ -19,6 +19,19 @@ function InProgress (){
         setLoading(false)
         console.log(err)})
 },[])
+useEffect(()=>{
+  if(newTaskInProgress){ 
+      setLoading(true)
+      loadingTaskInProgress().then((res)=>{
+          setLoading(false)
+          setInProgressTasks(res)
+          loadingNewTaskInProgressSuccess()
+      })
+      .catch((err)=>{
+          setLoading(false)
+          console.log(err)})
+  }
+},[newTaskInProgress, loadingNewTaskInProgressSuccess])
   const taskComleted=(task:Task)=>{
     console.log(task)
     // const result = inProgressDeeds.findIndex(item=>item.title === task.title)

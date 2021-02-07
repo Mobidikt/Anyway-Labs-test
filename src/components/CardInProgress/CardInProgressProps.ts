@@ -1,6 +1,6 @@
-import { task } from '../../utils/projectProps';
+import { Task } from '../../utils/projectProps';
 
 export type CardInProgressProps ={
-    task:task,
-    taskComleted: (task: task)=> void
+    task:Task,
+    taskComleted: (task: Task)=> void
 }

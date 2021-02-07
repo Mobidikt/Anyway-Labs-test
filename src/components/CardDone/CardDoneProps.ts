@@ -1,5 +1,5 @@
-import { task } from '../../utils/projectProps';
+import { Task } from '../../utils/projectProps';
 
 export type CardDoneProps ={
-    task:task,
+    task:Task,
 }

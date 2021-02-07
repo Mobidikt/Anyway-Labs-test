@@ -10,7 +10,8 @@ import {calcTimeTask} from './utils/calcTimeTask'
 
 function App() {
   const [openPopupNewTask, setOpenPopupNewTask] = useState(false);
-  const [addNewTask, setAddNewTask] = useState(false);
+  const [newTask, setNewTask] = useState(false);
+  const [newTaskInProgress, setNewTaskInProgress] = useState(false);
   const handleClose = () =>  setOpenPopupNewTask(false);
   const handleShow = () => setOpenPopupNewTask(true);
   async function addTask (taskName:string, timeTask:string){
@@ -22,19 +23,25 @@ function App() {
       start: 0,
       end:0
     }).then((res)=>{
-      setAddNewTask(true)
+      setNewTask(true)
       handleClose()
     }).catch((err)=>{console.log(err)})
   }
   const loadingNewTaskSuccess = () =>{
-    setAddNewTask(false)
+    setNewTask(false)
+  }
+  const moveTaskInProgress = () =>{
+    setNewTaskInProgress(true)
+  }
+  const loadingNewTaskInProgressSuccess = () => {
+    setNewTaskInProgress(false)
   }
   return (
     <>
     <Header/>
     <main className='main'>
-      <ToDo handleShow={handleShow} addNewTask={addNewTask} loadingNewTaskSuccess={loadingNewTaskSuccess}/>
-      <InProgress />
+      <ToDo handleShow={handleShow} newTask={newTask} loadingNewTaskSuccess={loadingNewTaskSuccess} moveTaskInProgress={moveTaskInProgress}/>
+      <InProgress newTaskInProgress={newTaskInProgress} loadingNewTaskInProgressSuccess={loadingNewTaskInProgressSuccess}/>
       <Done />
     </main>
       <AddToDoPopup open={openPopupNewTask} addTask={addTask}/>

@@ -2,25 +2,30 @@ import React, { useEffect, useState } from 'react'
 import  {Button, Badge, Spinner} from 'react-bootstrap';
 import {ToDoProps} from './ToDoProps'
 import CardToDo from '../CardToDo/CardToDo';
-import { loadingTaskToDo } from '../../transport/api';
+import { inWorkTask, loadingTaskToDo } from '../../transport/api';
 import { Task } from '../../utils/projectProps';
 import './ToDo.css'
 
-function ToDo ({handleShow, addNewTask, loadingNewTaskSuccess}:ToDoProps){
+function ToDo ({handleShow, newTask, loadingNewTaskSuccess, moveTaskInProgress}:ToDoProps){
     const [toDoTasks, setToDoTasks] = useState<Task[]>([])
+    const [loadToDoTasks, setLoadToDoTasks] = useState<boolean>(true)
     const [loading, setLoading] = useState<boolean>(false)
     useEffect(()=>{
-        setLoading(true)
-        loadingTaskToDo().then((res)=>{
-            setLoading(false)
-            setToDoTasks(res)
-        })  
-        .catch((err)=>{
-            setLoading(false)
-            console.log(err)})
-    },[]) 
+        if(loadToDoTasks){
+            setLoading(true)
+            loadingTaskToDo().then((res)=>{
+                setLoading(false)
+                setLoadToDoTasks(false)
+                setToDoTasks(res)
+            })  
+            .catch((err)=>{
+                setLoading(false)
+                setLoadToDoTasks(false)
+                console.log(err)})
+        }
+    },[loadToDoTasks]) 
     useEffect(()=>{
-        if(addNewTask){ 
+        if(newTask){ 
             setLoading(true)
             loadingTaskToDo().then((res)=>{
                 setLoading(false)
@@ -30,11 +35,22 @@ function ToDo ({handleShow, addNewTask, loadingNewTaskSuccess}:ToDoProps){
                 setLoading(false)
                 console.log(err)})
         }
-    },[addNewTask, loadingNewTaskSuccess])
+    },[newTask, loadingNewTaskSuccess])
     const moveToInProgress=(task:Task)=>{
-        const result = toDoTasks.find(item=>item.title === task.title)
-        console.log(result)
-      }
+        const currentTask = toDoTasks.find(item=>item.title === task.title);
+        if(currentTask){
+            currentTask.start = Date.now();
+            inWorkTask(currentTask)
+            .then(()=>{
+                moveTaskInProgress()
+                loadingTaskToDo().then((res)=>{
+                    setLoadToDoTasks(true)
+                })   
+                .catch((err)=>console.log(err))
+            })
+            .catch((err)=>console.log(err))
+        } else console.log('Error: Task not found')  
+    }
     return(<div className='to-do'>
     <div className='to-do__header'>
         <Badge style={{borderRadius: '50%', display: 'flex'}} variant="secondary" className='badger'>{toDoTasks? toDoTasks.length: 0}</Badge>
