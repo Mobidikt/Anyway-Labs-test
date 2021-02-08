@@ -1,4 +1,5 @@
 export type AddToDoProps= {
     open:boolean , 
-    addTask: (taskName: string, timeTask: string)=>void
+    addTask: (taskName: string, timeTask: string)=>void,
+    handleClose:()=>void
 }

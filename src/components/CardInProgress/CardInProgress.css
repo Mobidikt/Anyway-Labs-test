@@ -17,12 +17,19 @@
  .card__title{
      margin: 0;
  }
+ .card__title::before{
+     content: '';
+     width: 16px;
+     height: 16px;
+     background-image: url(../../images/icons/card-heading.svg);
+     background-size: cover;
+ }
  .card__info{
      margin: 0;
-     padding: 0;
+     padding: 0 0.5rem 2px 0rem;
  }
  .card__time{
-    padding: 0 0.5rem 2px;
+    padding: 0 0.5rem 2px 0rem;
  }
  .card__button{
      max-height: 36px;

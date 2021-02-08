@@ -6,36 +6,24 @@ import { inWorkTask, loadingTaskToDo } from '../../transport/api';
 import { Task } from '../../utils/projectProps';
 import './ToDo.css'
 
-function ToDo ({handleShow, newTask, loadingNewTaskSuccess, moveTaskInProgress}:ToDoProps){
+function ToDo ({handleShow, newTask, moveTaskInProgress}:ToDoProps){
     const [toDoTasks, setToDoTasks] = useState<Task[]>([])
-    const [loadToDoTasks, setLoadToDoTasks] = useState<boolean>(true)
     const [loading, setLoading] = useState<boolean>(false)
     useEffect(()=>{
-        if(loadToDoTasks){
             setLoading(true)
             loadingTaskToDo().then((res)=>{
                 setLoading(false)
-                setLoadToDoTasks(false)
                 setToDoTasks(res)
             })  
             .catch((err)=>{
                 setLoading(false)
-                setLoadToDoTasks(false)
                 console.log(err)})
-        }
-    },[loadToDoTasks]) 
-    useEffect(()=>{
-        if(newTask){ 
-            setLoading(true)
-            loadingTaskToDo().then((res)=>{
-                setLoading(false)
-                loadingNewTaskSuccess()
-            })
-            .catch((err)=>{
-                setLoading(false)
-                console.log(err)})
-        }
-    },[newTask, loadingNewTaskSuccess])
+    },[]) 
+    // useEffect(()=>{
+    //     if(newTask){ 
+    //         setToDoTasks([...tasks, newTask])
+    //     }
+    // },[newTask])
     const moveToInProgress=(task:Task)=>{
         const currentTask = toDoTasks.find(item=>item.title === task.title);
         if(currentTask){
@@ -43,10 +31,8 @@ function ToDo ({handleShow, newTask, loadingNewTaskSuccess, moveTaskInProgress}:
             inWorkTask(currentTask)
             .then(()=>{
                 moveTaskInProgress()
-                loadingTaskToDo().then((res)=>{
-                    setLoadToDoTasks(true)
-                })   
-                .catch((err)=>console.log(err))
+                const newTasks = toDoTasks.filter((task) => task.title !== currentTask.title);
+                setToDoTasks(newTasks);
             })
             .catch((err)=>console.log(err))
         } else console.log('Error: Task not found')  

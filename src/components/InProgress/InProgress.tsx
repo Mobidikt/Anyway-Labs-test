@@ -8,7 +8,7 @@ import { InProgressProps } from './InProgressProps';
 
 function InProgress ({newTaskInProgress, loadingNewTaskInProgressSuccess, moveTaskInDone}:InProgressProps){
   const [inProgressTasks, setInProgressTasks] = useState<Task[]>([])
-  const [loadInProgressTasks, setLoadInProgressTasks] = useState<boolean>(false)
+  // const [loadInProgressTasks, setLoadInProgressTasks] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   useEffect(()=>{
     setLoading(true)
@@ -19,7 +19,7 @@ function InProgress ({newTaskInProgress, loadingNewTaskInProgressSuccess, moveTa
     .catch((err)=>{
         setLoading(false)
         console.log(err)})
-},[loadInProgressTasks])
+}, [])   //[loadInProgressTasks])
 useEffect(()=>{
   if(newTaskInProgress){ 
       setLoading(true)
@@ -40,10 +40,10 @@ useEffect(()=>{
         inDoneTask(currentTask)
         .then(()=>{
           moveTaskInDone()
-          loadingTaskInProgress().then((res)=>{
-          setLoadInProgressTasks(true)
-        })
-            .catch((err)=>console.log(err))
+        //   loadingTaskInProgress().then((res)=>{
+        //   setLoadInProgressTasks(true)
+        // })
+        //     .catch((err)=>console.log(err))
         })
         .catch((err)=>console.log(err))
     } else console.log('Error: Task not found')  

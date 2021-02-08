@@ -21,13 +21,11 @@ function Done ({newTaskInDone,loadingNewTaskInDone}:DoneProps){
 },[])
 useEffect(()=>{
     if(newTaskInDone){ 
-        setLoading(true)
-        loadingTaskDone().then((res)=>{
-            setLoading(false)
+        loadingTaskDone().then(()=>{
             loadingNewTaskInDone()
         })
         .catch((err)=>{
-            setLoading(false)
+
             console.log(err)})
     }
 },[newTaskInDone, loadingNewTaskInDone])
