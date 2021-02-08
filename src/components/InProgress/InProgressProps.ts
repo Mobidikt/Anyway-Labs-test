@@ -1,6 +1,7 @@
+import { Task } from '../../utils/projectProps';
 
 export type InProgressProps ={
-    newTaskInProgress: boolean,
-    moveTaskInDone: ()=>void,
+    newTaskInProgress:Boolean,
+    moveTaskInDone: (task:Task)=>void,
     loadingNewTaskInProgressSuccess: ()=>void
 }

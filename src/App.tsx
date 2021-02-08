@@ -7,12 +7,13 @@ import InProgress from './components/InProgress/InProgress';
 import ToDo from './components/ToDo/ToDo';
 import { postTask } from './transport/api';
 import {calcTimeTask} from './utils/calcTimeTask'
+import { Task } from './utils/projectProps';
 
 function App() {
   const [openPopupNewTask, setOpenPopupNewTask] = useState(false);
   const [newTask, setNewTask] = useState({});
   const [newTaskInProgress, setNewTaskInProgress] = useState(false);
-  const [newTaskInDone, setNewTaskInDone] = useState(false);
+  const [newTaskInDone, setNewTaskInDone] = useState<Task|null>(null);
   const handleClose = () =>  setOpenPopupNewTask(false);
   const handleShow = () => setOpenPopupNewTask(true);
   async function addTask (taskName:string, timeTask:string){
@@ -29,33 +30,27 @@ function App() {
       handleClose()
     }).catch((err)=>{console.log(err)})
   }
-  const loadingNewTaskSuccess = () =>{
-    setNewTask(false)
-  }
   const moveTaskInProgress = () =>{
     setNewTaskInProgress(true)
-  }
+  } 
   const loadingNewTaskInProgressSuccess = () => {
     setNewTaskInProgress(false)
   }
-  const moveTaskInDone = () =>{
-    setNewTaskInDone(true)
-  }
-  const loadingNewTaskInDone = () => {
-    setNewTaskInDone(false)
+  const moveTaskInDone = (task:Task) =>{
+    setNewTaskInDone(task)
   }
   return (
     <>
     <Header/>
     <main className='main'>
-      <ToDo handleShow={handleShow} newTask={newTask} loadingNewTaskSuccess={loadingNewTaskSuccess} moveTaskInProgress={moveTaskInProgress}/>
+      <ToDo handleShow={handleShow} newTask={newTask} moveTaskInProgress={moveTaskInProgress}/>
       <InProgress newTaskInProgress={newTaskInProgress} loadingNewTaskInProgressSuccess={loadingNewTaskInProgressSuccess} moveTaskInDone={moveTaskInDone}/>
-      <Done newTaskInDone={newTaskInDone} loadingNewTaskInDone={loadingNewTaskInDone}/>
+      <Done newTaskInDone={newTaskInDone} setNewTaskInDone={setNewTaskInDone}/>
     </main>
       <AddToDoPopup open={openPopupNewTask} addTask={addTask} handleClose={handleClose}/>
-    </> 
+    </>  
   );
 }
 
-export default App;
+export default App; 
  

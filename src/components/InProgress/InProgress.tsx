@@ -37,9 +37,9 @@ useEffect(()=>{
     const currentTask = inProgressTasks.find(item=>item.title === task.title)
     if(currentTask){
         currentTask.end = Date.now();
-        inDoneTask(currentTask)
+        inDoneTask(currentTask) 
         .then(()=>{
-          moveTaskInDone()
+          moveTaskInDone(currentTask)
         //   loadingTaskInProgress().then((res)=>{
         //   setLoadInProgressTasks(true)
         // })

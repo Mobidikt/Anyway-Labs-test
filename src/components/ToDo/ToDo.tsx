@@ -14,7 +14,7 @@ function ToDo ({handleShow, newTask, moveTaskInProgress}:ToDoProps){
             loadingTaskToDo().then((res)=>{
                 setLoading(false)
                 setToDoTasks(res)
-            })  
+            })   
             .catch((err)=>{
                 setLoading(false)
                 console.log(err)})

@@ -15,7 +15,6 @@ function AddToDoPopup ({open, addTask, handleClose }:AddToDoProps){
       const handleTimeTaskChange = (e:any) => {
         setTimeTask(e.target.value);
       };
-
       const handleSubmit =(e:any)=>{
         e.preventDefault();
         addTask(titleTask, timeTask);

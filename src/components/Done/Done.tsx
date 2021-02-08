@@ -6,9 +6,9 @@ import CardDone from '../CardDone/CardDone';
 import {DoneProps} from './DoneProps';
 import './Done.css'
 
-function Done ({newTaskInDone,loadingNewTaskInDone}:DoneProps){
-    const [doneTasks, setdoneTasks] = useState<Task[]|undefined>([])
-    const [loading, setLoading] = useState<boolean>(false)
+function Done ({newTaskInDone, setNewTaskInDone}:DoneProps){
+    const [doneTasks, setdoneTasks] = useState<Task[]>([])
+    const [loading, setLoading] = useState<boolean>(false) 
   useEffect(()=>{
     setLoading(true)
     loadingTaskDone().then((res)=>{
@@ -20,15 +20,14 @@ function Done ({newTaskInDone,loadingNewTaskInDone}:DoneProps){
         console.log(err)})
 },[])
 useEffect(()=>{
-    if(newTaskInDone){ 
-        loadingTaskDone().then(()=>{
-            loadingNewTaskInDone()
-        })
-        .catch((err)=>{
-
-            console.log(err)})
+    if(newTaskInDone){
+    const newCompletedTask = doneTasks.find(item=>item.title === newTaskInDone.title)
+    if(!newCompletedTask){ 
+        setdoneTasks([...doneTasks, newTaskInDone]);
+        setNewTaskInDone(null);
     }
-},[newTaskInDone, loadingNewTaskInDone])
+}
+},[newTaskInDone, doneTasks, setNewTaskInDone])
     return(<div className='done'>
     <div className='done__header'>
     <Badge style={{borderRadius: '50%', display: 'flex'}} variant="secondary" className='badger'>{doneTasks ? doneTasks.length : 0}</Badge>

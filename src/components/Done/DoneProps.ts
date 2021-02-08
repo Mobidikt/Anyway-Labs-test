@@ -1,4 +1,6 @@
+import { Task } from '../../utils/projectProps';
+
 export type DoneProps ={
-    newTaskInDone: boolean,
-    loadingNewTaskInDone: ()=>void,
+    newTaskInDone: Task|null,
+    setNewTaskInDone:(arg: Task|null)=>void
 }
