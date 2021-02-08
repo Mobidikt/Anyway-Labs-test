@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import  {Button, Card } from 'react-bootstrap';
 import { CardInProgressProps } from './CardInProgressProps';
 import './CardInProgress.css'
@@ -7,13 +7,15 @@ function CardInProgress ({task, moveTaskDone}:CardInProgressProps){
   const [time, setTime]=useState<string>('00:00:00')
   const [timeOut, setTimeOut]=useState<boolean>(false)
   const startTime = task.start;
-  let timer:number,hour, min,sec, interval:any;
-  function addZero(n:any) { 
-    return (parseInt(n, 10) < 10 ? '0' : '') + n; 
-  };
-  function showTimer() { 
+
+  const addZero =useCallback<(n:number)=>string>((n)=>{
+    return (n < 10 ? '0' : '') + n; 
+  },[])
+  
+  const showTimer =useCallback(()=>{
+    let timer:number,hour, min,sec:string
     let today = Date.now();
-    timer = today - startTime;
+    timer = today - startTime; 
     if(task.requiredTime<=timer) {
       setTimeOut(true)
     } else {setTimeOut(false) }
@@ -21,23 +23,22 @@ function CardInProgress ({task, moveTaskDone}:CardInProgressProps){
     min = addZero((Math.floor(timer/60000))%60);
     sec = addZero((Math.floor(timer/1000))%60); 
     return (`${hour}:${min}:${sec}`)
-  };
-   function startTimer (){
-      interval =setInterval(()=>{
+  },[setTimeOut,startTime,task.requiredTime,addZero])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
       let timer = showTimer();
       setTime(timer) 
-    },1000)
-  };
-  startTimer()
-  useEffect(()=>{
- 
-  },[])
-const completedTask=()=>{
-  clearInterval(interval)
-    task.end=Date.now() - startTime
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [showTimer, setTime]);
+
+  const completedTask=()=>{
+    task.end=Date.now()-startTime
     moveTaskDone(task)
-}
-    return(<li>
+  }
+
+  return(<li>
   <Card className='in-progress__card'>
       <Card.Body style={{padding: '0.5rem 1.25rem 0.5rem 2rem'}} className='card__body'>
         <div style={{height: '100%'}}>
