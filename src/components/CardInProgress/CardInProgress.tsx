@@ -11,19 +11,18 @@ function CardInProgress ({task, moveTaskDone}:CardInProgressProps){
   const addZero =useCallback<(n:number)=>string>((n)=>{
     return (n < 10 ? '0' : '') + n; 
   },[])
-  
+
   const showTimer =useCallback(()=>{
-    let timer:number,hour, min,sec:string
     let today = Date.now();
-    timer = today - startTime; 
+    const timer:number = today - startTime;
     if(task.requiredTime<=timer) {
       setTimeOut(true)
     } else {setTimeOut(false) }
-    hour = addZero((Math.floor(timer/3600000))%60);
-    min = addZero((Math.floor(timer/60000))%60);
-    sec = addZero((Math.floor(timer/1000))%60); 
+    const hour:string = addZero((Math.floor(timer/3600000))%60);
+    const min:string = addZero((Math.floor(timer/60000))%60);
+    const sec:string = addZero((Math.floor(timer/1000))%60); 
     return (`${hour}:${min}:${sec}`)
-  },[setTimeOut,startTime,task.requiredTime,addZero])
+  },[setTimeOut, startTime, task.requiredTime, addZero])
 
   useEffect(() => {
     const interval = setInterval(() => {

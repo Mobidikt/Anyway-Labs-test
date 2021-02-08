@@ -1,7 +1,7 @@
 export const inProgressDeeds = [
   {
     title: 'Go to grocery',
-    time: '00:00',
+    time: '00:00:00',
     requiredTime: 0,
     start: 1612611882710,
     end: 0,

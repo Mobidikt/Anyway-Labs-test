@@ -4,10 +4,10 @@ import { AddToDoProps } from './AddToDoPopupProps';
 
 function AddToDoPopup ({open, addTask, handleClose }:AddToDoProps){
     const [titleTask, setTitleTask] = useState<string>('')
-    const [timeTask, setTimeTask] = useState<string>('00:00')
+    const [timeTask, setTimeTask] = useState<string>('00:00:00')
     useEffect(() => {
         setTitleTask('');
-        setTimeTask('00:00')
+        setTimeTask('00:00:00')
       }, [open]);
       const handleTaskNameChange = (e:any) => {
         setTitleTask(e.target.value); 
@@ -33,11 +33,12 @@ function AddToDoPopup ({open, addTask, handleClose }:AddToDoProps){
                 </Form.Text>
                 <Form.Label>Required time</Form.Label>
                 <Form.Control     
-    type="time"
-    name="task-time"
-    onChange={handleTimeTaskChange} value={timeTask}
-    min="00:00"
-    max="24:00"/>
+                  type="time"
+                  name="task-time"
+                  onChange={handleTimeTaskChange} value={timeTask}
+                  step='1'
+                  min="00:00:00"
+                  max="24:00:00"/>
             </Form.Group>
             <Button variant="primary" type="submit" onClick={handleSubmit}>
                 Add task
