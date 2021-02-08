@@ -6,7 +6,7 @@ import { inWorkTask, loadingTaskToDo } from '../../transport/api';
 import { Task } from '../../utils/projectProps';
 import './ToDo.css'
 
-function ToDo ({handleShow, newTask, moveTaskInProgress}:ToDoProps){
+function ToDo ({handleShow, newTask, setNewTask, moveTaskInProgress}:ToDoProps){
     const [toDoTasks, setToDoTasks] = useState<Task[]>([])
     const [loading, setLoading] = useState<boolean>(false)
     useEffect(()=>{
@@ -19,18 +19,22 @@ function ToDo ({handleShow, newTask, moveTaskInProgress}:ToDoProps){
                 setLoading(false)
                 console.log(err)})
     },[]) 
-    // useEffect(()=>{
-    //     if(newTask){ 
-    //         setToDoTasks([...tasks, newTask])
-    //     }
-    // },[newTask])
+    useEffect(()=>{
+        if(newTask){
+            const newToDoTask = toDoTasks.find(item=>item.title === newTask.title)
+        if(!newToDoTask){ 
+            setToDoTasks([...toDoTasks, newTask])
+            setNewTask(null) 
+        }
+    }
+    },[newTask, toDoTasks, setNewTask])
     const moveToInProgress=(task:Task)=>{
         const currentTask = toDoTasks.find(item=>item.title === task.title);
         if(currentTask){
             currentTask.start = Date.now();
             inWorkTask(currentTask)
             .then(()=>{
-                moveTaskInProgress()
+                moveTaskInProgress(currentTask)
                 const newTasks = toDoTasks.filter((task) => task.title !== currentTask.title);
                 setToDoTasks(newTasks);
             })

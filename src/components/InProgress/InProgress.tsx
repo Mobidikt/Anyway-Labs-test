@@ -6,33 +6,29 @@ import { loadingTaskInProgress, inDoneTask } from '../../transport/api';
 import { Task } from '../../utils/projectProps';
 import { InProgressProps } from './InProgressProps';
 
-function InProgress ({newTaskInProgress, loadingNewTaskInProgressSuccess, moveTaskInDone}:InProgressProps){
+function InProgress ({newTaskInProgress, setNewTaskInProgress, moveTaskInDone}:InProgressProps){
   const [inProgressTasks, setInProgressTasks] = useState<Task[]>([])
   // const [loadInProgressTasks, setLoadInProgressTasks] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   useEffect(()=>{
     setLoading(true)
-    loadingTaskInProgress().then((res)=>{
-        setLoading(false)
-        setInProgressTasks(res)
+    loadingTaskInProgress().then((res)=>{ 
+        setLoading(false) 
+        setInProgressTasks(res)  
     })
     .catch((err)=>{
         setLoading(false)
         console.log(err)})
 }, [])   //[loadInProgressTasks])
 useEffect(()=>{
-  if(newTaskInProgress){ 
-      setLoading(true)
-      loadingTaskInProgress().then((res)=>{
-          setLoading(false)
-          setInProgressTasks(res)
-          loadingNewTaskInProgressSuccess()
-      })
-      .catch((err)=>{
-          setLoading(false)
-          console.log(err)})
+  if(newTaskInProgress){
+    const newTask = inProgressTasks.find(item=>item.title === newTaskInProgress.title)
+    if(!newTask){ 
+      setInProgressTasks([...inProgressTasks, newTaskInProgress]);
+      setNewTaskInProgress(null);
   }
-},[newTaskInProgress, loadingNewTaskInProgressSuccess])
+  }
+},[newTaskInProgress, inProgressTasks, setNewTaskInProgress])
   const moveToDone=(task:Task)=>{
     const currentTask = inProgressTasks.find(item=>item.title === task.title)
     if(currentTask){

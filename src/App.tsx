@@ -11,8 +11,8 @@ import { Task } from './utils/projectProps';
 
 function App() {
   const [openPopupNewTask, setOpenPopupNewTask] = useState(false);
-  const [newTask, setNewTask] = useState({});
-  const [newTaskInProgress, setNewTaskInProgress] = useState(false);
+  const [newTask, setNewTask] = useState<Task|null>(null);
+  const [newTaskInProgress, setNewTaskInProgress] = useState<Task|null>(null);
   const [newTaskInDone, setNewTaskInDone] = useState<Task|null>(null);
   const handleClose = () =>  setOpenPopupNewTask(false);
   const handleShow = () => setOpenPopupNewTask(true);
@@ -28,14 +28,11 @@ function App() {
     await postTask(newTask).then(()=>{
       setNewTask(newTask)
       handleClose()
-    }).catch((err)=>{console.log(err)})
+    }).catch(()=>{console.log('Задача не добавлена')})
   }
-  const moveTaskInProgress = () =>{
-    setNewTaskInProgress(true)
+  const moveTaskInProgress = (task:Task) =>{
+    setNewTaskInProgress(task)
   } 
-  const loadingNewTaskInProgressSuccess = () => {
-    setNewTaskInProgress(false)
-  }
   const moveTaskInDone = (task:Task) =>{
     setNewTaskInDone(task)
   }
@@ -43,8 +40,8 @@ function App() {
     <>
     <Header/>
     <main className='main'>
-      <ToDo handleShow={handleShow} newTask={newTask} moveTaskInProgress={moveTaskInProgress}/>
-      <InProgress newTaskInProgress={newTaskInProgress} loadingNewTaskInProgressSuccess={loadingNewTaskInProgressSuccess} moveTaskInDone={moveTaskInDone}/>
+      <ToDo handleShow={handleShow} newTask={newTask} setNewTask={setNewTask} moveTaskInProgress={moveTaskInProgress}/>
+      <InProgress newTaskInProgress={newTaskInProgress} setNewTaskInProgress={setNewTaskInProgress} moveTaskInDone={moveTaskInDone}/>
       <Done newTaskInDone={newTaskInDone} setNewTaskInDone={setNewTaskInDone}/>
     </main>
       <AddToDoPopup open={openPopupNewTask} addTask={addTask} handleClose={handleClose}/>
