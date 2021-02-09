@@ -18,7 +18,7 @@ function CardInProgress ({task, moveTaskDone}:CardInProgressProps){
     if(task.requiredTime<=timer) {
       setTimeOut(true)
     } else {setTimeOut(false) }
-    const hour:string = addZero((Math.floor(timer/3600000))%60);
+    const hour:string = addZero((Math.floor(timer/3600000)));
     const min:string = addZero((Math.floor(timer/60000))%60);
     const sec:string = addZero((Math.floor(timer/1000))%60); 
     return (`${hour}:${min}:${sec}`)
