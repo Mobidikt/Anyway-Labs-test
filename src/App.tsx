@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import './App.css';
 import AddToDoPopup from './components/AddToDoPopup/AddToDoPopup';
+import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 import { postTask } from './transport/api';
@@ -30,6 +30,7 @@ function App() {
     <>
     <Header/>
     <Main handleShow={handleShow} newTask={newTask} setNewTask={setNewTask}/>
+    <Footer/>
     <AddToDoPopup open={openPopupNewTask} addTask={addTask} handleClose={handleClose}/>
     </>  
   );

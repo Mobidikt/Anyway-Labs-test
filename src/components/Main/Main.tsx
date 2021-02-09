@@ -4,6 +4,7 @@ import InProgress from '../../components/InProgress/InProgress';
 import ToDo from '../../components/ToDo/ToDo';
 import { Task } from '../../utils/projectProps';
 import { MainProps } from './MainProps';
+import './Main.css';
 
 function Main ({handleShow, newTask, setNewTask}:MainProps){
   const [newTaskInProgress, setNewTaskInProgress] = useState<Task|null>(null);
