@@ -1,6 +1,6 @@
 # Anyway-Labs-test
 
-https://mobidikt.github.io/mesto-react/
+https://mobidikt.github.io/anyway-labs-test/
 
 Реализовано:
 
