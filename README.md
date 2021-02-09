@@ -1,7 +1,5 @@
 # Anyway-Labs-test
 
-https://mobidikt.github.io/anyway-labs-test/
-
 Реализовано:
 
 - при добавление задачи открывается модальное окно, для заполнения данных;
@@ -16,3 +14,7 @@ https://mobidikt.github.io/anyway-labs-test/
 
 Запуск прилодения в режиме разработки.
 Открыть в браузере http://localhost:3000.
+
+## npm run build
+
+Собирает проект в папку dist, готовый к загрузке на сервер.
