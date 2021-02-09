@@ -1,0 +1,29 @@
+.in-progress__card{
+    display: flex;
+    margin-bottom: 2%;
+    min-height: 80px;
+    overflow: hidden;
+ }
+ .card__body{
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 0.5rem;
+     height: 100%;
+ }
+ .to-do__button{
+     margin: 25px auto;
+ }
+ .card__title{
+     margin: 0;
+ }
+ .card__info{
+     margin: 0;
+     padding: 0 0.5rem 2px 0rem;
+ }
+ .card__time{
+    padding: 0 0.5rem 2px 0rem;
+ }
+ .card__button{
+     max-height: 36px;
+ }
