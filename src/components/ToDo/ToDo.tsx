@@ -35,8 +35,6 @@ function ToDo ({handleShow, newTask, setNewTask, moveTaskInProgress}:ToDoProps){
             inWorkTask(currentTask)
             .then(()=>{
                 moveTaskInProgress(currentTask)
-                const newTasks = toDoTasks.filter((task) => task.title !== currentTask.title);
-                setToDoTasks(newTasks);
             })
             .catch((err)=>console.log(err))
         } else console.log('Error: Task not found')  
